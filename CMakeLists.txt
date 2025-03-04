@@ -21,6 +21,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/LowState.msg"
   "msg/RawBytesMsg.msg"
   "msg/Odometer.msg"
+  "msg/RemoteControllerState.msg"
   "srv/RpcService.srv"
 )
 
