@@ -14,6 +14,7 @@ find_package(rosidl_default_generators REQUIRED)
 rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/BoosterApiReqMsg.msg"
   "msg/BoosterApiRespMsg.msg"
+  "msg/ButtonEventMsg.msg"
   "msg/MotorState.msg"
   "msg/MotorCmd.msg"
   "msg/LowCmd.msg"
