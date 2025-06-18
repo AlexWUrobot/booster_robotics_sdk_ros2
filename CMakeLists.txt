@@ -23,6 +23,9 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/RawBytesMsg.msg"
   "msg/Odometer.msg"
   "msg/RemoteControllerState.msg"
+  "msg/HandCommand.msg"
+  "msg/HandDdsMsg.msg"
+  "msg/HandParam.msg"
   "srv/RpcService.srv"
 )
 
