@@ -21,18 +21,31 @@ int main(int argc, char **argv) {
 
     auto request =
         std::make_shared<booster_interface::srv::RpcService::Request>();
-    auto req_msg = booster_interface::CreateSwitchHandEndEffectorControlModeMsg(true);
-    auto req_msg_close = booster_interface::CreateSwitchHandEndEffectorControlModeMsg(false);
-    auto req_move_msg = booster_interface::CreateMoveMsg(0.5, 0.0, 0.0);
-    auto req_move_msg_zero = booster_interface::CreateMoveMsg(0.0, 0.0, 0.0);
+    auto req_msg = booster_interface::CreateMsg<
+        booster::robot::b1::LocoApiId::kSwitchHandEndEffectorControlMode,
+        booster::robot::b1::SwitchHandEndEffectorControlModeParameter>(true);
+
+    auto req_msg_close = booster_interface::CreateMsg<
+        booster::robot::b1::LocoApiId::kSwitchHandEndEffectorControlMode,
+        booster::robot::b1::SwitchHandEndEffectorControlModeParameter>(false);
+
+    auto req_move_msg = booster_interface::CreateMsg<
+        booster::robot::b1::LocoApiId::kMove,
+        booster::robot::b1::MoveParameter>(0.5, 0.0, 0.0);
+
+    auto req_move_msg_zero = booster_interface::CreateMsg<
+        booster::robot::b1::LocoApiId::kMove,
+        booster::robot::b1::MoveParameter>(0.0, 0.0, 0.0);
 
     booster::robot::Posture tar_posture;
     tar_posture.position_ = booster::robot::Position(0.35, 0.25, 0.1);
     tar_posture.orientation_ = booster::robot::Orientation(0., 0., 0.);
-    auto req_move_hand_end_effector_msg = booster_interface::CreateMoveHandEndEffectorMsg(tar_posture, 2000, booster::robot::b1::HandIndex::kLeftHand);
-    // auto req_msg = booster_interface::CreateChangeModeMsg(booster::robot::RobotMode::kDamping);
-    // auto req_msg = booster_interface::CreateLieDownMsg();
-    
+
+    auto req_move_hand_end_effector_msg = booster_interface::CreateMsg<
+        booster::robot::b1::LocoApiId::kMoveHandEndEffector,
+        booster::robot::b1::MoveHandEndEffectorParameter>(
+        tar_posture, 2000, booster::robot::b1::HandIndex::kLeftHand);
+
     while (!client->wait_for_service(1s)) {
         if (!rclcpp::ok()) {
             RCLCPP_ERROR(rclcpp::get_logger("rclcpp"),
@@ -44,7 +57,6 @@ int main(int argc, char **argv) {
     }
 
     while (rclcpp::ok()) {
-
         // change to hand end effector control mode
         request->msg = req_msg;
         auto result = client->async_send_request(request);
