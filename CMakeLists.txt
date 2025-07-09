@@ -28,6 +28,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/HandDdsMsg.msg"
   "msg/HandParam.msg"
   "srv/RpcService.srv"
+  "srv/AgentService.srv"
 )
 
 # 安装头文件
