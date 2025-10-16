@@ -29,6 +29,7 @@ rosidl_generate_interfaces(${PROJECT_NAME}
   "msg/HandParam.msg"
   "msg/ProneBodyControlStatus.msg"
   "msg/RobotStatesMsg.msg"
+  "msg/RobotReplayTrajID.msg"
   "srv/RpcService.srv"
   "srv/AgentService.srv"
 )
