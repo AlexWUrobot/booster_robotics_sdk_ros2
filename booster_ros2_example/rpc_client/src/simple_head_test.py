@@ -40,7 +40,7 @@ def main():
 
     # Look down
     node.get_logger().info('Looking down (1.0)...')
-    req_look_down = create_msg(2004, {"pitch": 1.0, "yaw": 0.0})
+    req_look_down = create_msg(2004, {"pitch": 0.99, "yaw": 0.0})
     request = RpcService.Request()
     request.msg = req_look_down
     future = client.call_async(request)
@@ -50,7 +50,7 @@ def main():
     else:
         node.get_logger().error('Failed to call rpc service')
     
-    time.sleep(0.7)
+    time.sleep(1.5)
 
     # Back to center
     node.get_logger().info('Centering head...')
@@ -62,6 +62,8 @@ def main():
         node.get_logger().info('Center result: %s' % future.result().msg.body)
     else:
         node.get_logger().error('Failed to call rpc service')
+
+    time.sleep(1.0)
 
 
     # Look up
