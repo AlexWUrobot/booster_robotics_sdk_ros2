@@ -25,11 +25,23 @@ def main():
             node.get_logger().error('Interrupted while waiting for the service. Exiting.')
             return
 
-    # Move head pitch up (0.5 rad)
-    # Looking up
-    node.get_logger().info('Moving head pitch up (0.5)...')
-    req_look_up = create_msg(2004, {"pitch": 0.5, "yaw": 0.0}) # kRotateHead
+    # Look down
+    node.get_logger().info('Looking down...')
+    req_look_down = create_msg(2004, {"pitch": -0.5, "yaw": 0.0})
     request = RpcService.Request()
+    request.msg = req_look_down
+    future = client.call_async(request)
+    rclpy.spin_until_future_complete(node, future)
+    if future.result() is not None:
+        node.get_logger().info('Look down result: %s' % future.result().msg.body)
+    else:
+        node.get_logger().error('Failed to call rpc service')
+    
+    time.sleep(2.0)
+
+    # Look up
+    node.get_logger().info('Looking up...')
+    req_look_up = create_msg(2004, {"pitch": 0.5, "yaw": 0.0})
     request.msg = req_look_up
     future = client.call_async(request)
     rclpy.spin_until_future_complete(node, future)
@@ -37,12 +49,37 @@ def main():
         node.get_logger().info('Look up result: %s' % future.result().msg.body)
     else:
         node.get_logger().error('Failed to call rpc service')
+
+    time.sleep(2.0)
+
+    # Back to center
+    node.get_logger().info('Centering head...')
+    req_center = create_msg(2004, {"pitch": 0.0, "yaw": 0.0})
+    request.msg = req_center
+    future = client.call_async(request)
+    rclpy.spin_until_future_complete(node, future)
+    if future.result() is not None:
+        node.get_logger().info('Center result: %s' % future.result().msg.body)
+    else:
+        node.get_logger().error('Failed to call rpc service')
     
     time.sleep(2.0)
 
-    # Move head yaw left (0.5 rad)
-    # Looking left
-    node.get_logger().info('Moving head yaw left (0.5)...')
+    # Look right
+    node.get_logger().info('Looking right...')
+    req_look_right = create_msg(2004, {"pitch": 0.0, "yaw": -0.5})
+    request.msg = req_look_right
+    future = client.call_async(request)
+    rclpy.spin_until_future_complete(node, future)
+    if future.result() is not None:
+        node.get_logger().info('Look right result: %s' % future.result().msg.body)
+    else:
+        node.get_logger().error('Failed to call rpc service')
+
+    time.sleep(2.0)
+
+    # Look left
+    node.get_logger().info('Looking left...')
     req_look_left = create_msg(2004, {"pitch": 0.0, "yaw": 0.5})
     request.msg = req_look_left
     future = client.call_async(request)
@@ -54,9 +91,8 @@ def main():
 
     time.sleep(2.0)
 
-    # Center head
+    # Back to center
     node.get_logger().info('Centering head...')
-    req_center = create_msg(2004, {"pitch": 0.0, "yaw": 0.0})
     request.msg = req_center
     future = client.call_async(request)
     rclpy.spin_until_future_complete(node, future)
