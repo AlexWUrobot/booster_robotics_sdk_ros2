@@ -26,8 +26,8 @@ def main():
             return
 
     # Look down
-    node.get_logger().info('Looking down...')
-    req_look_down = create_msg(2004, {"pitch": -0.5, "yaw": 0.0})
+    node.get_logger().info('Looking down (-1.0)...')
+    req_look_down = create_msg(2004, {"pitch": -1.0, "yaw": 0.0})
     request = RpcService.Request()
     request.msg = req_look_down
     future = client.call_async(request)
@@ -40,8 +40,8 @@ def main():
     time.sleep(2.0)
 
     # Look up
-    node.get_logger().info('Looking up...')
-    req_look_up = create_msg(2004, {"pitch": 0.5, "yaw": 0.0})
+    node.get_logger().info('Looking up (1.0)...')
+    req_look_up = create_msg(2004, {"pitch": 1.0, "yaw": 0.0})
     request.msg = req_look_up
     future = client.call_async(request)
     rclpy.spin_until_future_complete(node, future)
@@ -66,8 +66,8 @@ def main():
     time.sleep(2.0)
 
     # Look right
-    node.get_logger().info('Looking right...')
-    req_look_right = create_msg(2004, {"pitch": 0.0, "yaw": -0.5})
+    node.get_logger().info('Looking right (yaw -1.0)...')
+    req_look_right = create_msg(2004, {"pitch": 0.0, "yaw": -1.0})
     request.msg = req_look_right
     future = client.call_async(request)
     rclpy.spin_until_future_complete(node, future)
@@ -79,8 +79,8 @@ def main():
     time.sleep(2.0)
 
     # Look left
-    node.get_logger().info('Looking left...')
-    req_look_left = create_msg(2004, {"pitch": 0.0, "yaw": 0.5})
+    node.get_logger().info('Looking left (yaw 1.0)...')
+    req_look_left = create_msg(2004, {"pitch": 0.0, "yaw": 1.0})
     request.msg = req_look_left
     future = client.call_async(request)
     rclpy.spin_until_future_complete(node, future)
