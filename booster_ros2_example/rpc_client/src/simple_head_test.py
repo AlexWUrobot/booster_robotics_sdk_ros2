@@ -67,7 +67,7 @@ def main():
 
     # Look right
     node.get_logger().info('Looking right (yaw -1.0)...')
-    req_look_right = create_msg(2004, {"pitch": 0.0, "yaw": -0.5)
+    req_look_right = create_msg(2004, {"pitch": 0.0, "yaw": -0.5})
     request.msg = req_look_right
     future = client.call_async(request)
     rclpy.spin_until_future_complete(node, future)
